@@ -12,5 +12,5 @@ console.log(x);
 
 let s = {a:1,b:2,c:3,d:4}
 let{a,b,c,d} = s;
-console.log(a);
+// console.log(a);
 
