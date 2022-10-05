@@ -1,0 +1,15 @@
+    differences beteeen restful apis
+
+export number, string, array, object, function
+import all these,                     import function andimportimport { resourceLimits } from "worker_threads"
+ express from "./express"
+ call it
+
+
+npm init and npm install express
+
+References in javascript
+make all functions of resource.js file and understand how they are RESTful
+implement finalbomb json
+
+import all functions from resource.js into finalbomb and use them .
