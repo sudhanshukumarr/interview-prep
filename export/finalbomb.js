@@ -2,30 +2,14 @@ const express = require('express');
 
 const app = express()
 
-const ages = [1,2,3,4];
+var {returnAges, insertAge, upadateAges, deleteLastAge} = require('../crud-operation=/resource')
 
-function returnAges(){
-    return ages;
-}
-function insertAge(age){
-    ages.push(age)
-    return age;
-}
-function upadateAges(indexOfAge,age){
-    ages[indexOfAge] = age;
-    return age;
-}
-function deleteLastAge(){
-    return ages.pop()
-}
-// middleare pattern
 app.get('', (req, res) => {
     const data = returnAges();
     res.json({
         data:data
     })
 })
-
 app.post('', (req, res) => {
     const insertedAge = insertAge(34);
     res.json({
