@@ -23,3 +23,14 @@ function binary(x){
 
 const output3 = arr.map(binary);
 console.log(output3);
+
+//map function using arow function
+
+const output4 = arr.map((x) => x*2);
+console.log(output4);
+
+const output5 = arr.map((x)=> x*3);
+console.log(output5);
+
+const output6 = arr.map((x)=> x.toString(2));
+console.log(output6);
