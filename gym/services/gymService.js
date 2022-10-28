@@ -15,5 +15,18 @@ async function getGymById(gymID){
     
 }
 
+
+async function createGym(name,address){
+    const result =  await db.query(`INSERT INTO gym (name, address)
+    values('${name}', '${address}');`,
+    { type: Sequelize.QueryTypes.INSERT})
+    let gymid = result[0];
+    return getGymById(gymid);
+    
+}
+
+ 
 exports.listGyms = listGyms;
 exports.getGymById = getGymById;
+
+exports.createGym = createGym;
