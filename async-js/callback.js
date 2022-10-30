@@ -1,12 +1,15 @@
 console.log('before');
-const user = getUser(1);
-console.log(user);
+ getUser(1,function(user){
+    console.log('user' , user);
+ });
+ 
 console.log('after');
 
-function getUser(id){
+function getUser(id,callback){
     setTimeout (() =>{
         console.log('reading from a data base....');
-        return {id : id , gitHubUserName : 'Sudhanshu' };
+        callback({id : id , gitHubUserName : 'Sudhanshu' });
+        return  ;
         
     }, 2000 );
 }

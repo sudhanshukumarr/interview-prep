@@ -1,19 +1,86 @@
-const { getUserById } = require("../services/userService");
+const { getUserById, createUser, updateUser, deleteUser } = require("../services/userService");
 
-async function getUser(req,res){
+async function getUser(req, res) {
     let userId = req.params.id;
     let data = await getUserById(userId);
-    if(!data){
+    if (!data) {
         res.status(404).json({
             message: ' no user found',
         })
         return;
     }
     res.json({
-        data : data
+        data: data
     })
-
 }
- 
 
-exports.getUser = getUser ;
+async function createUserController(req, res, next) {
+    let name = req.body.name;
+    let email = req.body.email;
+    let phone = req.body.phone;
+    let dob = req.body.dob;
+    let data = await createUser(name, email, phone, dob)
+    if (data) {
+        return res.json({
+            message: 'Data added successfully',
+        })
+    }
+    return res.json({
+        message: 'Error in adding data',
+    })
+}
+
+
+async function putUserController(req, res, next) {
+    try {
+        let id = req.params.id;
+
+        // let email = req.body.email;
+        //let phone = req.body.phone;
+        //let dob = req.body.dob;
+        const { name, phone, email, dob } = req.body;
+        let data = await updateUser(id, name, email, phone, dob)
+        if (data) {
+            return res.json({
+                data: data,
+                message: 'data updated succcessfuly'
+            })
+        }
+        return res.json({
+            messsage: 'not updated'
+        })
+    } catch (err) {
+        console.log('err ' + err);
+        res.json({
+            message: 'error in updating data'
+        })
+    }
+}
+
+async function deleteUserController(req, res, next) {
+    try {
+        let id = req.params.id;
+        let data = await deleteUser(id)
+        if (data) {
+            return res.json({
+                data: data,
+                message: 'data deleted succcessfuly'
+            })
+        }
+        return res.json({
+            messsage: 'not deleted'
+        })
+    } catch (err) {
+        console.log('err ' + err);
+        res.json({
+            message: 'error in  deleting data'
+        })
+    }
+}
+
+module.exports = {
+    getUser,
+    createUserController,
+    putUserController,
+    deleteUserController
+}

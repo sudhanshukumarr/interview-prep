@@ -1,0 +1,62 @@
+CREATE TABLE gym(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    address VARCHAR(100),
+    status enum("1", "0") DEFAULT "1",
+    created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE users(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    phone VARCHAR(20) UNIQUE,
+    dob DATE,
+    user_type enum("trainer", "client") DEFAULT "client",
+    status enum("1", "0") DEFAULT "1",
+    created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE plans(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    duration INT,
+    price INT,
+    gym_id INT,
+    status enum("1", "0") DEFAULT '1',
+    created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY(gym_id) REFERENCES gym(id) ON DELETE
+    set
+        null
+);
+
+CREATE TABLE membership(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    plan_id INT,
+    expiry_date DATE,
+    status ENUM("1", "0") DEFAULT '1',
+    created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE
+    set
+        null,
+        FOREIGN KEY(plan_id) REFERENCES plans(id) ON DELETE
+    set
+        null
+);
+
+CREATE TABLE payments(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    plan_id INT,
+    amount INT,
+    status ENUM("1", "0") DEFAULT '1',
+    created DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE set null,
+    FOREIGN KEY(plan_id) REFERENCES plans(id) ON DELETE set null
+);

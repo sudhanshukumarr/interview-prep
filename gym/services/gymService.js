@@ -25,8 +25,42 @@ async function createGym(name,address){
     
 }
 
+async function updateGym(id,name,address){
+    try {
+        let result = await getGymById(id);
+        if(result) {
+
+            await db.query(`UPDATE gym SET name='${name}', address='${address}' WHERE id='${id}'`,
+            {type:Sequelize.QueryTypes.UPDATE})
+            return true;
+        }else{
+            return false;
+        }
+    } catch(err) {
+        return false;
+    }
+}
+
+async function deleteGym(id){
+    try{
+        let gym = await getGymById(id);
+    if(!gym) {
+        return false;
+    }
+        await db.query(`UPDATE gym SET status ='0' WHERE id = '${id}'`,
+        {type:Sequelize.QueryTypes.DELETE})
+        return true;
+    }
+    catch(err){
+        return false;
+    }
+}
  
 exports.listGyms = listGyms;
 exports.getGymById = getGymById;
 
 exports.createGym = createGym;
+
+exports.updateGym = updateGym;
+
+exports.deleteGym = deleteGym;
