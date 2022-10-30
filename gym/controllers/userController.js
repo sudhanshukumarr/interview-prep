@@ -23,6 +23,7 @@ async function createUserController(req, res, next) {
     if (data) {
         return res.json({
             message: 'Data added successfully',
+            data
         })
     }
     return res.json({
@@ -30,11 +31,9 @@ async function createUserController(req, res, next) {
     })
 }
 
-
 async function putUserController(req, res, next) {
     try {
         let id = req.params.id;
-
         // let email = req.body.email;
         //let phone = req.body.phone;
         //let dob = req.body.dob;
@@ -43,11 +42,11 @@ async function putUserController(req, res, next) {
         if (data) {
             return res.json({
                 data: data,
-                message: 'data updated succcessfuly'
+                message: 'data updated successfully'
             })
         }
         return res.json({
-            messsage: 'not updated'
+            message: 'not updated'
         })
     } catch (err) {
         console.log('err ' + err);
@@ -64,11 +63,11 @@ async function deleteUserController(req, res, next) {
         if (data) {
             return res.json({
                 data: data,
-                message: 'data deleted succcessfuly'
+                message: 'data deleted successfully'
             })
         }
         return res.json({
-            messsage: 'not deleted'
+            message: 'not deleted'
         })
     } catch (err) {
         console.log('err ' + err);

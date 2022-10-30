@@ -6,24 +6,24 @@ async function getUserById(userId) {
         { type: Sequelize.QueryTypes.SELECT });
     return result[0];
 }
+
 async function createUser(name, email, phone, dob) {
     try {
         const result = await db.query(`INSERT INTO USERS(name,email,phone,dob)
     values ('${name}','${email}','${phone}','${dob}');`,
             { type: Sequelize.QueryTypes.INSERT });
-        return true;
+        const createdId = result[0];
+        return getUserById(createdId);
     } catch (err) {
+        console.log('error in creating user ', err);
         return false;
     }
-
-    let userid = result[0];
-    console.log(result);
 }
 
 async function updateUser(id, name, email, phone, dob) {
     let result = await db.query(`UPDATE users SET name = '${name}',email='${email}',phone='${phone}',dob = '${dob}' WHERE id = ${id}`,
         { type: Sequelize.QueryTypes.UPDATE })
-    return true;
+    return getUserById(id);
 }
 
 async function deleteUser(id) {

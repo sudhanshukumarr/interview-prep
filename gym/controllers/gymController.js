@@ -40,9 +40,11 @@ async function putGymController(req, res) {
             })
         }
         let result = await updateGym(id, name, address);
+
         if (result) {
             return res.json({
-                message: 'data update succesfully'
+                message: 'data update successfully',
+                data: result
             })
         }
         return res.json({
@@ -61,7 +63,7 @@ async function deleteGymController(req, res, next) {
     let result = await deleteGym(id)
     if (result) {
         return res.json({
-            message: 'data deletedd succesfully'
+            message: 'data deleted successfully'
         })
     }
     return res.json({

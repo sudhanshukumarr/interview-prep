@@ -9,4 +9,7 @@ app.use('/gym', gymRouter)
 
 app.use('/user', userRouter)
 
-app.listen(3000);  
+const PORT = 3000;
+app.listen(PORT, ()=> {
+    console.log(`GYM server listening on port ${PORT}`)
+});  

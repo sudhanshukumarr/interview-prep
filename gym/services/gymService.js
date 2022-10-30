@@ -5,24 +5,20 @@ async function listGyms(){
     const result = await db.query(`select * from gym where status = '1'`,
     { type: Sequelize.QueryTypes.SELECT });
     return result;
-    
 }
 
 async function getGymById(gymID){
     const result= await db.query(`select * from gym where id = ${gymID} AND status ='1'`,
     { type: Sequelize.QueryTypes.SELECT});
     return result[0];
-    
 }
-
 
 async function createGym(name,address){
     const result =  await db.query(`INSERT INTO gym (name, address)
     values('${name}', '${address}');`,
     { type: Sequelize.QueryTypes.INSERT})
-    let gymid = result[0];
-    return getGymById(gymid);
-    
+    let gymId = result[0];
+    return getGymById(gymId);
 }
 
 async function updateGym(id,name,address){
@@ -32,7 +28,7 @@ async function updateGym(id,name,address){
 
             await db.query(`UPDATE gym SET name='${name}', address='${address}' WHERE id='${id}'`,
             {type:Sequelize.QueryTypes.UPDATE})
-            return true;
+            return await getGymById(id);
         }else{
             return false;
         }
