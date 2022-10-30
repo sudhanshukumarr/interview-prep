@@ -1,32 +1,53 @@
 const { listGyms, getGymById, createGym, updateGym, deleteGym } = require("../services/gymService");
 
 async function getGyms(req, res, next) {
-    const gyms = await listGyms();
-    res.json({
-        data: gyms
-    })
+    try {
+        const gyms = await listGyms();
+        res.json({
+            data: gyms
+        })
+    } catch (err) {
+        console.log('error occurred ', err);
+        res.status(500).json({
+            message: 'something went wrong'
+        })
+    }
 }
 
 async function getGym(req, res, next) {
-    let id = req.params.id;
-    let data = await getGymById(id);
-    if (!data) {
-        return res.status(404).json({
-            message: 'no data found',
+    try {
+        let id = req.params.id;
+        let data = await getGymById(id);
+        if (!data) {
+            return res.status(404).json({
+                message: 'no data found',
+            })
+        }
+        res.json({
+            data
+        })
+    } catch (err) {
+        console.log('error occurred ', err);
+        res.status(500).json({
+            message: 'something went wrong'
         })
     }
-    res.json({
-        data
-    })
 }
 
 async function createGymController(req, res) {
-    let name = req.body.name;
-    let address = req.body.address;
-    let data = await createGym(name, address)
-    res.json({
-        data,
-    })
+    try {
+        let name = req.body.name;
+        let address = req.body.address;
+        let data = await createGym(name, address)
+        res.json({
+            data,
+        })
+    } catch (err) {
+        console.log('error occurred ', err);
+        res.status(500).json({
+            message: 'something went wrong'
+        })
+    }
 }
 
 async function putGymController(req, res) {
@@ -52,23 +73,30 @@ async function putGymController(req, res) {
         })
 
     } catch (err) {
-        res.json({
+        res.status(500).json({
             message: 'error in updating data'
         })
     }
 }
 
 async function deleteGymController(req, res, next) {
-    let id = req.params.id;
-    let result = await deleteGym(id)
-    if (result) {
-        return res.json({
-            message: 'data deleted successfully'
+    try {
+        let id = req.params.id;
+        let result = await deleteGym(id)
+        if (result) {
+            return res.json({
+                message: 'data deleted successfully'
+            })
+        }
+        return res.status(500).json({
+            message: 'not deleted'
+        })
+    } catch (err) {
+        console.log('error occurred ', err);
+        res.status(500).json({
+            message: 'something went wrong'
         })
     }
-    return res.json({
-        message: 'not deleted'
-    })
 }
 
 exports.createGymController = createGymController;
